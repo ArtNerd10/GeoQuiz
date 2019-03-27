@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">GeoQuiz</string>
+    <string name="question_kenya">1 : Nairobi is the Capital of Kenya.</string>
+    <string name="question_oceans">2 : The Pacific Ocean is Larger than the Atlantic Ocean</string>
+    <string name="question_mideast">3 : The Suez Canal connects the Red Sea and the Indian Ocean</string>
+    <string name="question_africa">4 : The source of the Nile River is in Egypt</string>
+    <string name="question_americas">5 : The Amazon River is the longest river in the Americas</string>
+    <string name="question_asia">6 : Lake Baikal is the world\'s oldest and deepest freshwater lake</string>
+    <string name="true_button">True</string>
+    <string name="false_button">False</string>
+    <string name="correct_toast">Correct!</string>
+    <string name="incorrect_toast">Incorrect!</string>
+    <string name="top_toast">Top</string>
+    <string name="next_button">Next</string>
+    <string name="previous_button">Previous</string>
+    <string name="check_score">Check Score</string>
+    <!--<string name="question_kenyaa">R</string>-->
+    <!--<color name="white_blue">#e9e7f9 </color>-->
+    <color name="white">#ffffff</color>
+</resources>
