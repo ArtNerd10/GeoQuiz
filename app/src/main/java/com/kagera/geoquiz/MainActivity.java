@@ -1,12 +1,16 @@
 package com.kagera.geoquiz;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +30,13 @@ public class MainActivity extends AppCompatActivity
     private ImageButton mPreviousButton;
     private TextView mQuestionTextView;
     private Button btnRestart;
+    //add new feature - progress bar
+    private ProgressBar mProgressBar;
+    private TextView mProgressBarTextView;
+
+    private int mProgressStatus = 0;
+
+    private Handler mHandler = new Handler();
 
             private Question[] mQuestionBank = new Question[]
             {
@@ -40,12 +51,62 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "***ON CREATE CALLED***");
 
+
+        //questionIsOutOf();
+
+        //The progressBar
+
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        mProgressBarTextView = (TextView) findViewById(R.id.loadingCompleteTextView);
+
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                while (mProgressStatus < 100)
+                {
+                    mProgressStatus++;
+                    android.os.SystemClock.sleep(200);
+                    mHandler.post(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            mProgressBar.setProgress(mProgressStatus);
+                        }
+                    });
+                }
+                mHandler.post(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        if (mCurrentIndex != 0)
+                        {
+                            questionIsOutOf();
+                        }
+                        mProgressBarTextView.setVisibility(View.VISIBLE);
+                        calculateScore();
+                        mTrueButton.setEnabled(false);
+                        mFalseButton.setEnabled(false);
+                        mNextButton.setEnabled(false);
+                        mPreviousButton.setEnabled(false);
+                    }
+                });
+            }
+        }).start();
+        //End ProgressBar
+
         //Setting a question on the textview
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
+        //final ViewGroup transitionsContainer = (ViewGroup) findViewById(R.id.transitions_container);
+        //final TextView mQuestionTextView = (TextView) transitionsContainer.findViewById(R.id.question_text_view);
         int question = mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
 
@@ -90,18 +151,28 @@ public class MainActivity extends AppCompatActivity
 
         });
 
+
         //NEXT BUTTON
         mNextButton = (ImageButton) findViewById(R.id.next_button);
+        //
+        //final ImageButton mNextButton = (ImageButton) transitionsContainer.findViewById(R.id.next_button);
         mNextButton.setOnClickListener(new View.OnClickListener()
         {
+
+            //boolean visible;
+
             @Override
             public void onClick(View v)
             {
+                //TransitionManager.beginDelayedTransition(transitionsContainer);
+                //visible = true;
+                //mQuestionTextView.setVisibility(visible ? View.VISIBLE : View.GONE);
                 //Calculate and end quiz
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length; //Explain this? INCREMENT & CHECK IF VALUE IS GREATER THAN LENGTH OF ARRAY. DIVIDE BOTH A[3] BY Y = ANS IS THE REMAINDER
                 //check if i'm in the last question
                 if (mCurrentIndex != 0)
                 {
+                    questionIsOutOf();
                     enableButton();
                     updateQuestion();
                 }
@@ -115,13 +186,16 @@ public class MainActivity extends AppCompatActivity
         });
         updateQuestion();
 
-        //PREVIOUS BUTTON
+        //PREVIOUS BUTTON with some animation
         mPreviousButton = (ImageButton) findViewById(R.id.previous_button);
+        //ImageButton mPreviousButton = (ImageButton) transitionsContainer.findViewById(R.id.previous_button);
         mPreviousButton.setOnClickListener(new View.OnClickListener()
         {
+
             @Override
             public void onClick(View v)
             {
+
                 //Stop Going back when index of Array is 0
                 if(mCurrentIndex == 0)
                 {
@@ -178,7 +252,9 @@ public class MainActivity extends AppCompatActivity
     {
 
         int correctAnswers = 100 * myScore / mQuestionBank.length;
-        Toast.makeText(getApplicationContext(),"END OF QUIZ: " + "Score: " + correctAnswers + " %", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),"END OF QUIZ!", Toast.LENGTH_LONG).show();// + "Score: " + correctAnswers + " %", Toast.LENGTH_LONG).show();
+        //mProgressBarTextView.setText(correctAnswers);
+        mProgressBarTextView.setText("Your Score: " + correctAnswers + " %");
 /*
         //Just display text in the correct place Please
 
@@ -189,7 +265,6 @@ public class MainActivity extends AppCompatActivity
             finishedQuiz.show();
         }
 */
-
     }
     //Challenge: Prevent repeating Answers?
     private void enableButton()
@@ -204,11 +279,26 @@ public class MainActivity extends AppCompatActivity
         mFalseButton.setEnabled(false);
     }
 
+
+    //ADD NEW FEATURE OF ANIMATION - That code should've been here
+
     private void updateQuestion()  //Set Button as Private so that it can't be modified
     {
         int question = mQuestionBank[mCurrentIndex].getTextResId();
         mQuestionTextView.setText(question);
+
     }
+
+    //Setting No of Questions
+    private void questionIsOutOf()
+    {
+       if (mCurrentIndex != 0)
+       {
+           mProgressBarTextView.setText("Question: " + mCurrentIndex + " of " + mQuestionBank.length);
+       }
+    }
+    //End
+
 
     //LEARN HOW ACTIVITY LIFECYCLE WORKS
     @Override

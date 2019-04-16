@@ -17,61 +17,110 @@
         android:background="@color/white">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:gravity="top|center_horizontal"
+            android:text="Finish The Quiz Before The Timer Ends. Good Luck!" />
+
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="top"
+                android:layout_margin="10dp" />
+
+            <TextView
+                android:id="@+id/loadingCompleteTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/progress_bar"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:textSize="15sp"
+                android:visibility="visible"
+                android:textColor="@android:color/holo_red_dark"
+                android:fontStyle="italic"
+                android:textStyle="bold"
+                android:fontWeight="400"/><!--android:text="Questions Complete"-->
+
+
+        <TextView
             android:id="@+id/question_text_view"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:background="@color/white"/>
+            android:textSize="24sp"
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:textColor="@android:color/background_dark"/><!--android:layout_gravity="center-->
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="91dp"
+            android:layout_margin="16dp"
+            android:orientation="horizontal"
+            android:background="@color/deepBlue">
 
             <Button
                 android:id="@+id/true_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:background="@android:color/holo_blue_dark"
                 android:clickable="true"
-                android:text="@string/true_button"
-                android:focusable="true" />
+                android:focusable="true"
+                android:text="@string/true_button" />
 
 
             <Button
                 android:id="@+id/false_button"
-
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:background="@android:color/holo_blue_dark"
                 android:clickable="true"
-                android:text="@string/false_button"
-                android:focusable="true" />
+                android:focusable="true"
+                android:text="@string/false_button" />
 
         </LinearLayout>
 
         <!--next button with image-->
         <!--<Button-->
-        <ImageButton
-            android:id="@+id/next_button"
-            android:layout_width="60dp"
+        <LinearLayout
+            android:id="@+id/transitions_container"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/next_button"
-            android:src="@drawable/arrow_right"
-            android:visibility="visible"
-            />
+            android:background="@android:color/background_light">
 
-        <ImageButton
-            android:id="@+id/previous_button"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:contentDescription="previous"
-            android:src="@drawable/arrow_left"
-            android:visibility="visible" />
+            <ImageButton
+                android:id="@+id/previous_button"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:layout_margin="30dp"
+                android:contentDescription="@string/previous"
+                android:src="@drawable/arrow_left"
+                android:visibility="visible" />
+
+            <ImageButton
+                android:id="@+id/next_button"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:layout_margin="30dp"
+                android:contentDescription="@string/next_button"
+                android:src="@drawable/arrow_right"
+                android:visibility="visible" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/restart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Restart This App"
-            />
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:background="@android:color/holo_blue_dark"
+            android:text="@string/restart_questions" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
