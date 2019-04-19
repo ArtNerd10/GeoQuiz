@@ -5,74 +5,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="com.kagera.knowledgepond.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/s10"
         android:gravity="center"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="82dp"
-        tools:layout_editor_absoluteY="38dp"
-        android:background="@color/white">
+        tools:layout_editor_absoluteX="44dp"
+        tools:layout_editor_absoluteY="16dp">
+
+
+
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="top"
+            android:layout_margin="10dp" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:gravity="top|center_horizontal"
-            android:text="Finish The Quiz Before The Timer Ends. Good Luck!" />
+            android:id="@+id/loadingCompleteTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:fontStyle="italic"
+            android:fontWeight="400"
 
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_gravity="top"
-                android:layout_margin="10dp" />
-
-            <TextView
-                android:id="@+id/loadingCompleteTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/progress_bar"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:textSize="15sp"
-                android:visibility="visible"
-                android:textColor="@android:color/holo_red_dark"
-                android:fontStyle="italic"
-                android:textStyle="bold"
-                android:fontWeight="400"/><!--android:text="Questions Complete"-->
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="25sp"
+            android:textStyle="bold" /><!--android:text="Questions Complete"-->
 
 
         <TextView
             android:id="@+id/question_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
-            android:textSize="24sp"
-            android:background="@color/white"
             android:gravity="center_horizontal"
-            android:textColor="@android:color/background_dark"/><!--android:layout_gravity="center-->
+            android:padding="15dp"
+            android:textColor="#ffffff"
+            android:textSize="24sp" /><!--android:layout_gravity="center-->
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="91dp"
+            android:layout_height="182dp"
             android:layout_margin="16dp"
-            android:orientation="horizontal"
-            android:background="@color/deepBlue">
+            android:background="@drawable/gradient"
+            android:gravity="center">
 
             <Button
                 android:id="@+id/true_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="30dp"
-                android:background="@android:color/holo_blue_dark"
+                android:background="#3d004d"
                 android:clickable="true"
                 android:focusable="true"
-                android:text="@string/true_button" />
+                android:text="@string/true_button"
+                android:textColor="#ffffff"
+                />
 
 
             <Button
@@ -80,16 +75,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="30dp"
-                android:background="@android:color/holo_blue_dark"
+                android:background="#3d004d"
                 android:clickable="true"
                 android:focusable="true"
-                android:text="@string/false_button" />
+                android:text="@string/false_button"
+                android:textColor="#ffffff" />
 
         </LinearLayout>
 
         <!--next button with image-->
         <!--<Button-->
-        <LinearLayout
+        <!--<LinearLayout
             android:id="@+id/transitions_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -113,14 +109,16 @@
                 android:src="@drawable/arrow_right"
                 android:visibility="visible" />
 
-        </LinearLayout>
+        </LinearLayout>-->
 
         <Button
             android:id="@+id/restart"
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:background="@android:color/holo_blue_dark"
-            android:text="@string/restart_questions" />
+            android:layout_gravity="center_horizontal"
+            android:background="#3d004d"
+            android:text="@string/restart_questions"
+            android:textColor="#ffffff" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

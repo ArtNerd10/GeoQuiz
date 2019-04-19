@@ -1,11 +1,14 @@
 <resources>
     <string name="app_name">GeoQuiz</string>
-    <string name="question_kenya">    Nairobi is the Capital of Kenya.</string>
+    <string name="question_kenya">The equator passes through 13 countries and Kenya is one of them</string>
     <string name="question_oceans">The Pacific Ocean is Larger than the Atlantic Ocean</string>
     <string name="question_mideast">The Suez Canal connects the Red Sea and the Indian Ocean</string>
     <string name="question_africa">The source of the Nile River is in Egypt</string>
     <string name="question_americas">The Amazon River is the longest river in the Americas</string>
     <string name="question_asia">Lake Baikal is the world\'s oldest and deepest freshwater lake</string>
+    <string name="question_snowwhite">Snow White’s seven dwarfs all worked as lumberjacks</string>
+    <string name="question_random1">Brazil is the only country in the Americas whose official language is Portuguese</string>
+    <string name="question_random2">Cameron Diaz voices Princess Fiona from Shrek</string>
     <string name="true_button">True</string>
     <string name="false_button">False</string>
     <string name="correct_toast">Correct!</string>
@@ -16,6 +19,7 @@
     <string name="check_score">Check Score</string>
     <string name="previous">previous</string>
     <string name="restart_questions">Restart Questions</string>
+    <string name="how_well_do_you_know_your_geography_take_this_quiz_to_find_out">How well do you know your Geography. Take this quiz to find out.</string>
     <!--<string name="question_kenyaa">R</string>-->
     <!--<color name="white_blue">#e9e7f9 </color>-->
     <color name="white">#ffffff</color>

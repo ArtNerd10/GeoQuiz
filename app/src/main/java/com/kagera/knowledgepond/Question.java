@@ -1,4 +1,4 @@
-package com.kagera.geoquiz;
+package com.kagera.knowledgepond;
 
 public class Question
 {

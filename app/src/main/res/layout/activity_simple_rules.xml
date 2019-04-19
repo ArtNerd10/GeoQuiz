@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.kagera.knowledgepond.simpleRules"
+    android:orientation="vertical"
+    android:id="@+id/container"
+    android:background="@drawable/s10"
+    android:gravity="center_horizontal">
+
+    <ImageView
+        android:layout_width="131dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="80dp"
+        app:srcCompat="@drawable/logo_new2"/>
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:gravity="center_horizontal"
+            android:text="How well do you know stuff?"
+            android:textStyle="bold"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:gravity="center_horizontal"
+            android:text="- KnowledgePond is a simple True or False application "
+            android:textColor="@color/white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:gravity="center_horizontal"
+            android:text="- You have exactly 50 seconds to answer every question"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:gravity="center_horizontal"
+            android:text="- Always stay composed"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btn_start"
+            android:layout_width="204dp"
+            android:layout_height="28dp"
+            android:layout_margin="30dp"
+            android:background="@color/colorPrimary"
+            android:gravity="center_horizontal"
+            android:text="CLICK HERE TO START"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+</LinearLayout>

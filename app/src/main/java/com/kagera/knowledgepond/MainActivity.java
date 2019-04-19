@@ -1,18 +1,20 @@
-package com.kagera.geoquiz;
+package com.kagera.knowledgepond;
 
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.media.MediaPlayer;
+
+
+import com.kagera.geoquiz.R;
 
 import static android.widget.Toast.*;
 
@@ -33,10 +35,12 @@ public class MainActivity extends AppCompatActivity
     //add new feature - progress bar
     private ProgressBar mProgressBar;
     private TextView mProgressBarTextView;
-
+    private int questionNumber = 1;
     private int mProgressStatus = 0;
 
     private Handler mHandler = new Handler();
+
+
 
             private Question[] mQuestionBank = new Question[]
             {
@@ -45,8 +49,13 @@ public class MainActivity extends AppCompatActivity
                 new Question(R.string.question_mideast,false),
                 new Question(R.string.question_africa, false),
                 new Question(R.string.question_americas, true),
-                new Question(R.string.question_asia,true)
+                new Question(R.string.question_asia,true),
+                new Question(R.string.question_snowwhite, false),
+                    new Question(R.string.question_random1, true),
+                    new Question(R.string.question_random2, true),
             };
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,13 +65,28 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Log.d(TAG, "***ON CREATE CALLED***");
 
+        //MediaPlayer
+        final MediaPlayer mTimerSound = MediaPlayer.create(getApplicationContext(),R.raw.heartbeat);
+
+        mTimerSound.start();
+        //End of media player declaration
+
+
+
 
         //questionIsOutOf();
-
+        //mProgressBarTextView.setText("Question: " + questionNumber + " of " + mQuestionBank.length);
         //The progressBar
 
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mProgressBarTextView = (TextView) findViewById(R.id.loadingCompleteTextView);
+        mProgressBarTextView.setText("Question: " + questionNumber + " of " + mQuestionBank.length);
+        //Test
+
+        //
+
+
+
 
         new Thread(new Runnable()
         {
@@ -72,13 +96,14 @@ public class MainActivity extends AppCompatActivity
                 while (mProgressStatus < 100)
                 {
                     mProgressStatus++;
-                    android.os.SystemClock.sleep(200);
+                    android.os.SystemClock.sleep(500);
                     mHandler.post(new Runnable()
                     {
                         @Override
                         public void run()
                         {
                             mProgressBar.setProgress(mProgressStatus);
+                            //questionIsOutOf();
                         }
                     });
                 }
@@ -87,21 +112,20 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void run()
                     {
-                        if (mCurrentIndex != 0)
-                        {
-                            questionIsOutOf();
-                        }
                         mProgressBarTextView.setVisibility(View.VISIBLE);
                         calculateScore();
+                        mTimerSound.stop();
                         mTrueButton.setEnabled(false);
                         mFalseButton.setEnabled(false);
-                        mNextButton.setEnabled(false);
-                        mPreviousButton.setEnabled(false);
+                        //mNextButton.setEnabled(false);
+                        //mPreviousButton.setEnabled(false);
                     }
                 });
             }
         }).start();
         //End ProgressBar
+
+
 
         //Setting a question on the textview
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
@@ -126,11 +150,36 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+
+
                 //Anonymous Inner Classes
                 /*Toast top_Toast = Toast.makeText(MainActivity.this,"correct_toast", Toast.LENGTH_SHORT);
                 top_Toast.setGravity(Gravity.CENTER,0,0);*/
-                disableButton();
+
                 checkAnswer(true);
+
+
+
+                //Test If True Will go To NEXT QUESTION
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length; //Explain this? INCREMENT & CHECK IF VALUE IS GREATER THAN LENGTH OF ARRAY. DIVIDE BOTH A[3] BY Y = ANS IS THE REMAINDER
+
+                //check if i'm in the last question
+                if (mCurrentIndex != 0)
+                {
+                    //questionIsOutOf();
+                    updateQuestion();
+                    questionIsOutOf();
+                }
+                else
+                {
+                    calculateScore();
+                    //mNextButton.setEnabled(false);
+                    //mPreviousButton.setEnabled(false);
+                    notifyUserQuizIsFinished();
+                    mTimerSound.stop();
+                    mProgressBar.setVisibility(View.INVISIBLE);
+                }
+                //END
             }
         });
 
@@ -145,32 +194,51 @@ public class MainActivity extends AppCompatActivity
                 //Anonymous Inner Class
                 /*Toast top_Toast = Toast.makeText(MainActivity.this, "incorrect_toast", Toast.LENGTH_SHORT);
                 top_Toast.setGravity(Gravity.CENTER,0,0);*/
-                disableButton();
                 checkAnswer(false);
+
+                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length; //Explain this? INCREMENT & CHECK IF VALUE IS GREATER THAN LENGTH OF ARRAY. DIVIDE BOTH A[3] BY Y = ANS IS THE REMAINDER
+
+                //check if i'm in the last question
+                if (mCurrentIndex != 0)
+                {
+                    //questionIsOutOf();
+                    updateQuestion();
+                    questionIsOutOf();
+                }
+                else
+                {
+                    calculateScore();
+                    //mNextButton.setEnabled(false);
+                    //mPreviousButton.setEnabled(false);
+                    notifyUserQuizIsFinished();
+                    mTimerSound.stop();
+                    mProgressBar.setVisibility(View.INVISIBLE);
+                }
             }
 
         });
 
 
         //NEXT BUTTON
-        mNextButton = (ImageButton) findViewById(R.id.next_button);
+        //mNextButton = (ImageButton) findViewById(R.id.next_button);
         //
         //final ImageButton mNextButton = (ImageButton) transitionsContainer.findViewById(R.id.next_button);
-        mNextButton.setOnClickListener(new View.OnClickListener()
-        {
+
+        //mNextButton.setOnClickListener(new View.OnClickListener()
+        //{
 
             //boolean visible;
 
-            @Override
-            public void onClick(View v)
-            {
+            //@Override
+           // public void onClick(View v)
+            //{
                 //TransitionManager.beginDelayedTransition(transitionsContainer);
                 //visible = true;
                 //mQuestionTextView.setVisibility(visible ? View.VISIBLE : View.GONE);
                 //Calculate and end quiz
-                mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length; //Explain this? INCREMENT & CHECK IF VALUE IS GREATER THAN LENGTH OF ARRAY. DIVIDE BOTH A[3] BY Y = ANS IS THE REMAINDER
+                //CHANGE -- mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length; //Explain this? INCREMENT & CHECK IF VALUE IS GREATER THAN LENGTH OF ARRAY. DIVIDE BOTH A[3] BY Y = ANS IS THE REMAINDER
                 //check if i'm in the last question
-                if (mCurrentIndex != 0)
+                /*CHANGEif (mCurrentIndex != 0)
                 {
                     questionIsOutOf();
                     enableButton();
@@ -181,15 +249,15 @@ public class MainActivity extends AppCompatActivity
                     calculateScore();
                     mNextButton.setEnabled(false);
                     mPreviousButton.setEnabled(false);
-                }
-            }
-        });
-        updateQuestion();
+                }END CHANGE*/
+           // }
+      //  });
+       // updateQuestion();
 
         //PREVIOUS BUTTON with some animation
-        mPreviousButton = (ImageButton) findViewById(R.id.previous_button);
+       // mPreviousButton = (ImageButton) findViewById(R.id.previous_button);
         //ImageButton mPreviousButton = (ImageButton) transitionsContainer.findViewById(R.id.previous_button);
-        mPreviousButton.setOnClickListener(new View.OnClickListener()
+        /*mPreviousButton.setOnClickListener(new View.OnClickListener()
         {
 
             @Override
@@ -211,6 +279,8 @@ public class MainActivity extends AppCompatActivity
         });
         updateQuestion();
 
+        */
+
 
         //RESTART BUTTON--Understand how it works later-Too sleepy
         btnRestart = findViewById(R.id.restart);
@@ -219,9 +289,12 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+
                 Intent restartIntent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
+                //Intent restartIntent = new Intent(MainActivity.class);
                 restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(restartIntent);
+                mTimerSound.stop();
             }
         });
     }
@@ -232,6 +305,8 @@ public class MainActivity extends AppCompatActivity
     private void checkAnswer(boolean userPressedTrue)
     {
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
+        MediaPlayer mCorrectSound = MediaPlayer.create(getApplicationContext(),R.raw.gameshow_correct);
+        MediaPlayer mIncorrectSound = MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
 
         int messageResId = 0;
 
@@ -239,10 +314,12 @@ public class MainActivity extends AppCompatActivity
         {
             messageResId = R.string.correct_toast;
             myScore++;//increment myScore by 1
+            mCorrectSound.start();
         }
         else
         {
             messageResId = R.string.incorrect_toast;
+            mIncorrectSound.start();
         }
         makeText(this, messageResId, LENGTH_SHORT).show();
     }
@@ -279,6 +356,15 @@ public class MainActivity extends AppCompatActivity
         mFalseButton.setEnabled(false);
     }
 
+    private void notifyUserQuizIsFinished()
+    {
+        if (questionNumber == mQuestionBank.length)
+        {
+            disableButton();
+
+        }
+    }
+
 
     //ADD NEW FEATURE OF ANIMATION - That code should've been here
 
@@ -292,10 +378,9 @@ public class MainActivity extends AppCompatActivity
     //Setting No of Questions
     private void questionIsOutOf()
     {
-       if (mCurrentIndex != 0)
-       {
-           mProgressBarTextView.setText("Question: " + mCurrentIndex + " of " + mQuestionBank.length);
-       }
+        questionNumber++;
+        mProgressBarTextView.setText("Question: " + questionNumber + " of " + mQuestionBank.length);
+
     }
     //End
 
@@ -305,6 +390,7 @@ public class MainActivity extends AppCompatActivity
     public void onStart()
     {
         super.onStart();
+
         Log.d(TAG,"***ON START CALLED***");
     }
 
@@ -318,6 +404,7 @@ public class MainActivity extends AppCompatActivity
     {
         super.onPause();
         Log.d(TAG,"***ON PAUSE CALLED***");
+
     }
 
     public  void onStop()
