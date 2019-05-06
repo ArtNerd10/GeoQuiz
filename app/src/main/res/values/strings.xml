@@ -9,6 +9,8 @@
     <string name="question_snowwhite">Snow White’s seven dwarfs all worked as lumberjacks</string>
     <string name="question_random1">Brazil is the only country in the Americas whose official language is Portuguese</string>
     <string name="question_random2">Cameron Diaz voices Princess Fiona from Shrek</string>
+    <string name="question_random3">Lightning never strikes in the same place twice.</string>
+    <string name="question_random4"> If you cut an earthworm in half, both halves can regrow their body</string>
     <string name="true_button">True</string>
     <string name="false_button">False</string>
     <string name="correct_toast">Correct!</string>

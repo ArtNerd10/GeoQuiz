@@ -1,13 +1,16 @@
 package com.kagera.knowledgepond;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,12 +19,17 @@ import android.media.MediaPlayer;
 
 import com.kagera.geoquiz.R;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import static android.widget.Toast.*;
 
 public class MainActivity extends AppCompatActivity
 {
     private int mCurrentIndex = 0;
-    private int myScore = 0;
+    private int numberOfCorrectAnswers = 0;
+    private int numberOfIncorrectAnswers = 0;
+    private int mySCore;
     //saving data after autorotation
     private static final String TAG = "MainActivity";
     private static final String KEY_INDEX = "index";
@@ -37,6 +45,17 @@ public class MainActivity extends AppCompatActivity
     private TextView mProgressBarTextView;
     private int questionNumber = 1;
     private int mProgressStatus = 0;
+    private ImageButton btnShare;
+    private Button mshowScore;
+    public String mShareText;
+    private LinearLayout show_Score_LinearLayout;
+    //int mcorrectAnswers = 0;
+
+    //int getmShareText2 = calculateScore();
+
+
+
+
 
     private Handler mHandler = new Handler();
 
@@ -53,7 +72,10 @@ public class MainActivity extends AppCompatActivity
                 new Question(R.string.question_snowwhite, false),
                     new Question(R.string.question_random1, true),
                     new Question(R.string.question_random2, true),
+                    new Question(R.string.question_random3, false),
+                    new Question(R.string.question_random4, false),
             };
+
 
 
 
@@ -61,12 +83,17 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
 
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "***ON CREATE CALLED***");
 
+        //shuffle questions
+        shuffleQuestions();
+
+
         //MediaPlayer
-        final MediaPlayer mTimerSound = MediaPlayer.create(getApplicationContext(),R.raw.heartbeat);
+        final MediaPlayer mTimerSound = MediaPlayer.create(getApplicationContext(),R.raw.game_show);
 
         mTimerSound.start();
         //End of media player declaration
@@ -84,7 +111,8 @@ public class MainActivity extends AppCompatActivity
         //Test
 
         //
-
+        //int correctAnswers;
+        //correctAnswers = 100 * myScore / mQuestionBank.length;
 
 
 
@@ -96,7 +124,7 @@ public class MainActivity extends AppCompatActivity
                 while (mProgressStatus < 100)
                 {
                     mProgressStatus++;
-                    android.os.SystemClock.sleep(500);
+                    SystemClock.sleep(300);
                     mHandler.post(new Runnable()
                     {
                         @Override
@@ -113,10 +141,13 @@ public class MainActivity extends AppCompatActivity
                     public void run()
                     {
                         mProgressBarTextView.setVisibility(View.VISIBLE);
-                        calculateScore();
+                        show_Score_LinearLayout.setVisibility(View.VISIBLE);
+                        mshowScore.setVisibility(View.VISIBLE);
+                        Toast.makeText(getApplicationContext(), "End of Round 1. Click on 'SUMMARY'", Toast.LENGTH_LONG).show();
                         mTimerSound.stop();
                         mTrueButton.setEnabled(false);
                         mFalseButton.setEnabled(false);
+
                         //mNextButton.setEnabled(false);
                         //mPreviousButton.setEnabled(false);
                     }
@@ -125,6 +156,9 @@ public class MainActivity extends AppCompatActivity
         }).start();
         //End ProgressBar
 
+
+
+        //calculating correct answers
 
 
         //Setting a question on the textview
@@ -169,15 +203,25 @@ public class MainActivity extends AppCompatActivity
                     //questionIsOutOf();
                     updateQuestion();
                     questionIsOutOf();
+                    //mshowScore.setEnabled(false);
                 }
                 else
                 {
-                    calculateScore();
+
+                    //Toast.makeText(getApplicationContext(),"CLICK ON SUMMARY TO SEE HOW YOU PERFORMED", Toast.LENGTH_LONG).show();
+                    //change this - TEST MAJOR
+                    //mProgressBarTextView.setText(calculateScore(mcorrectAnswers));
                     //mNextButton.setEnabled(false);
                     //mPreviousButton.setEnabled(false);
                     notifyUserQuizIsFinished();
                     mTimerSound.stop();
                     mProgressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(getApplicationContext(), "End of Round 1. Click on 'SUMMARY'", Toast.LENGTH_LONG).show();
+                    //mshowScore.setEnabled(true);
+                    mshowScore.setVisibility(View.VISIBLE);
+                    show_Score_LinearLayout.setVisibility(View.VISIBLE);
+
+                    //calculateScore(mySCore);
                 }
                 //END
             }
@@ -197,26 +241,57 @@ public class MainActivity extends AppCompatActivity
                 checkAnswer(false);
 
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length; //Explain this? INCREMENT & CHECK IF VALUE IS GREATER THAN LENGTH OF ARRAY. DIVIDE BOTH A[3] BY Y = ANS IS THE REMAINDER
-
+                //correctAnswers = 100 * myScore / mQuestionBank.length;
                 //check if i'm in the last question
                 if (mCurrentIndex != 0)
                 {
                     //questionIsOutOf();
                     updateQuestion();
                     questionIsOutOf();
+                    //mshowScore.setEnabled(false);
                 }
                 else
                 {
-                    calculateScore();
+
+                    //mProgressBarTextView.setText(calculateScore(mcorrectAnswers));
+                    //Toast.makeText(getApplicationContext(),"CLICK ON SUMMARY TO SEE HOW YOU PERFORMED", Toast.LENGTH_LONG).show();
+                    //mProgressBarTextView.setText(calculateScore(mcorrectAnswers));
                     //mNextButton.setEnabled(false);
                     //mPreviousButton.setEnabled(false);
+                    //calculateScore(mcorrectAnswers);
                     notifyUserQuizIsFinished();
                     mTimerSound.stop();
                     mProgressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(getApplicationContext(), "End of Round 1. Click on 'SUMMARY'", Toast.LENGTH_LONG).show();
+                    //mshowScore.setEnabled(true);
+                    //calculateScore(mySCore);
+                    mshowScore.setVisibility(View.VISIBLE);
+                    show_Score_LinearLayout.setVisibility(View.VISIBLE);
                 }
             }
 
         });
+
+        //Social Media Share
+
+        /*
+        btnShare = (ImageButton) findViewById(R.id.btn_share);
+        btnShare.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                mShareText = "I got " + calculateScore(mySCore) + "%. " + "Play Knowledgepond now and see if you can outperform me! Download Knowledgepond here:";
+                Intent mShareProgress = new Intent(Intent.ACTION_SEND);
+                mShareProgress.setType("text/plain");
+                mShareProgress.putExtra(Intent.EXTRA_SUBJECT, "Knowledgepond");
+                mShareProgress.putExtra(Intent.EXTRA_TEXT, mShareText);
+                //CHANGE THIS - mShareProgress.putExtra(Intent.EXTRA_COMPONENT_NAME, Login.class);
+                startActivity(Intent.createChooser(mShareProgress, "Share Knowledgepond via"));
+            }
+        });
+        */
+        //End
 
 
         //NEXT BUTTON
@@ -282,7 +357,34 @@ public class MainActivity extends AppCompatActivity
         */
 
 
+        //SHOW SCORE-SUMMARY
+        mshowScore = findViewById(R.id.btn_showScores);
+        show_Score_LinearLayout = findViewById(R.id.show_score_layout);
+        show_Score_LinearLayout.setVisibility(View.INVISIBLE);
+        mshowScore.setVisibility(View.INVISIBLE);
+        mshowScore.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //mTimerSound.stop();
+                //Intent highScore = new Intent(MainActivity.this, highScores.class);
+                //startActivity(highScore);
+
+                    SharedPreferences preferences = getSharedPreferences("PREFS",0);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putInt("lastScore", calculateScore(mySCore));
+                    editor.apply();
+
+                    Intent highScores = new Intent(MainActivity.this, com.kagera.knowledgepond.highScores.class);
+                    startActivity(highScores);
+                    finish();
+            }
+        });
+        //END
+
         //RESTART BUTTON--Understand how it works later-Too sleepy
+        /*
         btnRestart = findViewById(R.id.restart);
         btnRestart.setOnClickListener(new View.OnClickListener()
         {
@@ -297,9 +399,15 @@ public class MainActivity extends AppCompatActivity
                 mTimerSound.stop();
             }
         });
+        */
     }
 
 
+    //SHUFFLE QUESTIONS
+    public void shuffleQuestions()
+    {
+        Collections.shuffle(Arrays.asList(mQuestionBank));
+    }
 
     //Checking Answer If it is correct - Referencing Question Class
     private void checkAnswer(boolean userPressedTrue)
@@ -307,31 +415,53 @@ public class MainActivity extends AppCompatActivity
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].isAnswerTrue();
         MediaPlayer mCorrectSound = MediaPlayer.create(getApplicationContext(),R.raw.gameshow_correct);
         MediaPlayer mIncorrectSound = MediaPlayer.create(getApplicationContext(),R.raw.incorrect);
+        //int correctAnswers = 100 * myScore / mQuestionBank.length;
+
 
         int messageResId = 0;
 
         if(userPressedTrue ==  answerIsTrue)
         {
             messageResId = R.string.correct_toast;
-            myScore++;//increment myScore by 1
+            numberOfCorrectAnswers++;//increment myScore by 1
             mCorrectSound.start();
         }
         else
         {
+            numberOfIncorrectAnswers++;
             messageResId = R.string.incorrect_toast;
             mIncorrectSound.start();
         }
         makeText(this, messageResId, LENGTH_SHORT).show();
+
+        /*if ((numberOfCorrectAnswers + numberOfIncorrectAnswers) == mQuestionBank.length)
+        {
+            int percentageOfScore;
+            percentageOfScore = ((numberOfCorrectAnswers / mQuestionBank.length) * 100);
+            Toast.makeText(MainActivity.this, getString(percentageOfScore), Toast.LENGTH_SHORT).show();
+        }*/
+    }
+
+    public int calculateScore(int percentageOfScore)
+    {
+
+
+            percentageOfScore = 100 * numberOfCorrectAnswers / mQuestionBank.length;
+            //String msg = "Your Score = " + percentageOfScore;
+            //Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+
+        mySCore = percentageOfScore;
+        return mySCore;
     }
 
     //Do calculation of Questions
-    private void calculateScore()
-    {
+    //public int calculateScore(int correctAnswers)
+    //{
 
-        int correctAnswers = 100 * myScore / mQuestionBank.length;
-        Toast.makeText(getApplicationContext(),"END OF QUIZ!", Toast.LENGTH_LONG).show();// + "Score: " + correctAnswers + " %", Toast.LENGTH_LONG).show();
+      //correctAnswers = 100 * myScore / mQuestionBank.length;
+      //Toast.makeText(getApplicationContext(),"END OF QUIZ!", Toast.LENGTH_LONG).show();// + "Score: " + correctAnswers + " %", Toast.LENGTH_LONG).show();
         //mProgressBarTextView.setText(correctAnswers);
-        mProgressBarTextView.setText("Your Score: " + correctAnswers + " %");
+       // mProgressBarTextView.setText("Your Score: " + correctAnswers + " %");
 /*
         //Just display text in the correct place Please
 
@@ -341,13 +471,19 @@ public class MainActivity extends AppCompatActivity
             finishedQuiz.setGravity(Gravity.TOP | Gravity.TOP, 8,40);
             finishedQuiz.show();
         }
+    mProgressBarTextView.setText(calculateScore(mcorrectAnswers));
 */
-    }
+
+   // mcorrectAnswers = correctAnswers;
+    //return mcorrectAnswers;
+        //mProgressBarTextView.setText(mcorrectAnswers);
+   // }
     //Challenge: Prevent repeating Answers?
     private void enableButton()
     {
         mTrueButton.setEnabled(true);
         mFalseButton.setEnabled(true);
+        //mshowScore.setEnabled(true);
     }
 
     private void disableButton()

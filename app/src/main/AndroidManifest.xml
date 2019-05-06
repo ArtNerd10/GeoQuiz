@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.kagera.knowledgepond.simpleRules"></activity>
+
+
         <activity android:name="com.kagera.knowledgepond.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,8 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.kagera.knowledgepond.registerActivity"></activity>
-        <activity android:name="com.kagera.knowledgepond.MainActivity"></activity>
+        <activity android:name="com.kagera.knowledgepond.registerActivity" />
+        <activity android:name="com.kagera.knowledgepond.simpleRules" />
+        <activity android:name="com.kagera.knowledgepond.MainActivity" />
+        <activity android:name="com.kagera.knowledgepond.highScores"></activity>
     </application>
 
 </manifest>

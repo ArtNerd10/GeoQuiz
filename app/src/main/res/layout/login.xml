@@ -16,7 +16,7 @@
             android:layout_width="131dp"
             android:layout_height="130dp"
             android:layout_marginTop="80dp"
-            app:srcCompat="@drawable/logo_new2" />
+            app:srcCompat="@drawable/knowledgepond_" />
 
 
         <EditText
@@ -53,6 +53,7 @@
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
             android:text="Login"
+            android:textStyle="bold"
             android:layout_marginTop="50dp"
             tools:layout_editor_absoluteX="107dp"
             tools:layout_editor_absoluteY="367dp" />
@@ -65,7 +66,8 @@
             android:textColor="@color/white"
             tools:layout_editor_absoluteX="109dp"
             tools:layout_editor_absoluteY="516dp"
-            android:layout_marginTop="15dp"/>
+            android:layout_marginTop="15dp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/txt_register"

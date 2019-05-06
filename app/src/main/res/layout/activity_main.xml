@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/s10"
+        android:background="@drawable/abstract_mountains"
         android:gravity="center"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="44dp"
@@ -36,7 +36,7 @@
             android:fontStyle="italic"
             android:fontWeight="400"
 
-            android:textColor="@android:color/holo_red_dark"
+            android:textColor="@android:color/holo_green_light"
             android:textSize="25sp"
             android:textStyle="bold" /><!--android:text="Questions Complete"-->
 
@@ -48,11 +48,11 @@
             android:gravity="center_horizontal"
             android:padding="15dp"
             android:textColor="#ffffff"
-            android:textSize="24sp" /><!--android:layout_gravity="center-->
+            android:textSize="18sp" /><!--android:layout_gravity="center-->
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="182dp"
+            android:layout_height="121dp"
             android:layout_margin="16dp"
             android:background="@drawable/gradient"
             android:gravity="center">
@@ -67,7 +67,7 @@
                 android:focusable="true"
                 android:text="@string/true_button"
                 android:textColor="#ffffff"
-                />
+                android:textStyle="bold" />
 
 
             <Button
@@ -79,7 +79,8 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:text="@string/false_button"
-                android:textColor="#ffffff" />
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -111,14 +112,53 @@
 
         </LinearLayout>-->
 
+        <LinearLayout
+            android:id="@+id/show_score_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="75dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/gradient"
+            android:gravity="center">
+
+            <!--
+            <ImageButton
+                android:id="@+id/btn_share"
+                android:layout_width="86dp"
+                android:layout_height="56dp"
+                android:layout_margin="30dp"
+                android:background="#3d004d"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/share_"
+                android:text="@string/false_button"
+                android:textColor="#ffffff" />
+                -->
+
+            <Button
+                android:id="@+id/btn_showScores"
+                android:layout_width="86dp"
+                android:layout_height="56dp"
+                android:layout_margin="30dp"
+                android:background="#3d004d"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="SUMMARY"
+                android:textColor="#ffffff"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!--
         <Button
             android:id="@+id/restart"
             android:layout_width="200dp"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
-            android:background="#3d004d"
+            android:background="@drawable/gradient"
+            android:textStyle="bold"
             android:text="@string/restart_questions"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"
+            />
+            -->
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

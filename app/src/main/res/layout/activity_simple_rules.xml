@@ -8,14 +8,14 @@
     tools:context="com.kagera.knowledgepond.simpleRules"
     android:orientation="vertical"
     android:id="@+id/container"
-    android:background="@drawable/s10"
+    android:background="@drawable/abstract_mountains"
     android:gravity="center_horizontal">
 
     <ImageView
         android:layout_width="131dp"
         android:layout_height="130dp"
         android:layout_marginTop="80dp"
-        app:srcCompat="@drawable/logo_new2"/>
+        app:srcCompat="@drawable/knowledgepond_"/>
 
     <LinearLayout
         android:gravity="center_horizontal"
@@ -46,7 +46,7 @@
             android:layout_height="match_parent"
             android:layout_margin="16dp"
             android:gravity="center_horizontal"
-            android:text="- You have exactly 50 seconds to answer every question"
+            android:text="- You have exactly 30 seconds to answer every question"
             android:textColor="@color/white" />
 
         <TextView
@@ -54,20 +54,22 @@
             android:layout_height="match_parent"
             android:layout_margin="16dp"
             android:gravity="center_horizontal"
-            android:text="- Always stay composed"
+            android:text="- Always stay composed and you'll do well"
             android:textColor="@color/white" />
 
-        <Button
-            android:id="@+id/btn_start"
-            android:layout_width="204dp"
-            android:layout_height="28dp"
-            android:layout_margin="30dp"
-            android:background="@color/colorPrimary"
-            android:gravity="center_horizontal"
-            android:text="CLICK HERE TO START"
-            android:textColor="@color/white"
-            android:textStyle="bold"/>
+
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/gradient"
+        android:text="START PLAYING"
+        android:layout_marginTop="40dp"
+        android:textColor="#ffffff"
+        android:textStyle="bold" />
 
 </LinearLayout>

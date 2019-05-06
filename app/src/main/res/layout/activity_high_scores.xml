@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/gradient_sky"
+    tools:context="com.kagera.knowledgepond.Login"
+    android:orientation="vertical"
+    android:id="@+id/container"
+    android:gravity="center_horizontal">
+
+
+    <ImageView
+        android:layout_width="131dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="80dp"
+        app:srcCompat="@drawable/knowledgepond_" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="YOUR BEST SCORES"
+
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_marginTop="30dp"/>
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/last_score"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:gravity="center_horizontal"
+
+            android:textStyle="bold"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/first_score"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:gravity="center_horizontal"
+
+            android:textStyle="bold"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/second_score"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:gravity="center_horizontal"
+
+            android:textStyle="bold"
+            android:textColor="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/third_score"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:gravity="center_horizontal"
+
+            android:textStyle="bold"
+            android:textColor="@android:color/black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="75dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/gradient"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/btn_share"
+                android:layout_width="86dp"
+                android:layout_height="56dp"
+                android:layout_margin="30dp"
+                android:background="#3d004d"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/share_"
+                android:text="@string/false_button"
+                android:textColor="#ffffff" />
+
+            <Button
+                android:id="@+id/restart"
+                android:layout_width="86dp"
+                android:layout_height="56dp"
+                android:layout_margin="30dp"
+                android:background="@drawable/gradient"
+                android:text="@string/restart_questions"
+                android:textColor="#ffffff"
+                android:layout_marginTop="90dp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="211dp"
+            android:layout_height="wrap_content"
+
+            android:background="@android:color/holo_purple"
+            android:text="Logout"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="107dp"
+            tools:layout_editor_absoluteY="367dp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
